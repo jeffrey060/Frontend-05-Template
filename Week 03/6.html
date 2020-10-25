@@ -1,0 +1,109 @@
+<script>
+      let reg = /([0-9\.]+)|([ \t]+)|(\+)|(\-)|(\*)|(\/)|([/r/n])/g
+      let names = ['Number', 'WhiteSpace', '+', '-', '*','/', 'LineTerminator']
+      function* tokenize(str) {
+          let lastIndex = 0
+          while(true) {
+              let data = reg.exec(str)
+              if (!data) {
+                  break;
+              }
+              // 是否符合规范
+              if (lastIndex + data[0].length < reg.lastIndex) {
+                  break;
+              }
+              lastIndex = reg.lastIndex
+              let token = {
+                  type: null,
+                  value: null
+              }
+              for(let i=1;i < data.length;i++){
+                 if (data[i]) {
+                     token={type: names[i-1], value: data[0]}
+                 }
+              }
+              yield token
+          }
+          yield {type: 'EOF'}
+      }
+      let source = []
+      for(let token of tokenize('1+99+1 * 28 * 99 / 77 + 1 - 200')) {
+          if (token.type !== 'WhiteSpace' &&  token.type !== 'LineTerminator') {
+              source.push(token)
+          }
+      }
+      function MultiplicationExpression(source) {
+          if (source[0].type === 'Number') {
+              let children = [source.shift()]
+              source.unshift(
+                  {
+                      type: 'MultiplicationExpression',
+                      children: children
+                  }
+              )
+              return MultiplicationExpression(source)
+          }
+          if (source[0].type === 'MultiplicationExpression' && (source[1].type === '*'||  source[1].type === '/')&& source[2].type==='Number') {
+              let children = [source.shift(), source.shift(),source.shift()]
+              source.unshift(
+                  {
+                      type: 'MultiplicationExpression',
+                      operator: children[1].type,
+                      children: children
+                  }
+              )
+              return MultiplicationExpression(source)
+          }
+          if (source[0].type === 'MultiplicationExpression') {
+              return source[0]
+          }
+      }
+  
+      function AdditionExpression(source) {
+          // 乘法产生式当成最小单元的加法产生式
+          if (source[0].type === 'MultiplicationExpression' ){
+              let children = [source.shift()]
+              source.unshift(
+                  {
+                      type: 'AdditionExpression',
+                      children: children
+                  }
+              )
+          }
+          if (source[0].type === 'AdditionExpression' && (source[1].type === '+' || source[1].type === '-')){
+              let children = [source.shift(), source.shift(), MultiplicationExpression(source)]
+              source.shift()
+              source.unshift(
+                  {
+                      type: 'AdditionExpression',
+                      operator: children[1].type,
+                      children: children
+                  }
+              )
+              return AdditionExpression(source)
+          }
+          if (source[0].type === 'AdditionExpression') {
+              return source[0]
+          }
+          // 可能第一个元素是number,处理成乘法产生式
+          MultiplicationExpression(source)
+          return AdditionExpression(source)
+      }
+  
+      function Expression(source) {
+          if (source[0].type === 'AdditionExpression' && source[1] && source[1].type === 'EOF') {
+              let children = [source.shift(), source.shift()]
+              source.unshift(
+                  {
+                      type: 'Expression',
+                      children: children
+                  }
+              )
+              return source[0]
+          }
+          AdditionExpression(source)
+          return Expression(source)
+      }
+  
+  
+  </script>
