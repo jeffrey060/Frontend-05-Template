@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .drag-box {
+        width: 80px;
+        height: 80px;
+        background-color: greenyellow;
+        display: inline-block;
+    }
+</style>
+
+<body>
+    <div id="container" >
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+      文字 文字 文字 文字 文字 文字 文字 文字 文字
+    </div>
+    <div class="drag-box" id="drag"></div>
+</body>
+<script>
+    let drag = document.getElementById('drag');
+    // 全局保存上次transform的位置
+    let baseX = 0, baseY = 0;
+    drag.addEventListener('mousedown', e => {
+        // 鼠标初始位置
+        let startX = e.clientX, startY = e.clientY;
+        let up = e => {
+            // 保存当前位置
+            baseX = e.clientX - startX + baseX;
+            baseY = e.clientY - startY + baseY;
+            document.removeEventListener('mouseup', up);
+            document.removeEventListener('mousemove', move);
+        }
+        let move = e => {
+            let range = getNearest(e.clientX, e.clientY);
+            range.insertNode(drag);  // 为什么不用移除原来的dom节点 浏览器做了
+            // drag.style.transform = `translate(${e.clientX - startX + baseX}px, ${e.clientY - startY + baseY}px)`;
+        }
+        // 这里要使用document 移动太快，可能会移到drag外面
+        document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', up);
+
+    })
+
+    let ranges = [];
+    let content = document.getElementById('container');
+    // console.log(content.childNodes);
+    for(let i=0;i< content.childNodes[0].textContent.length; i++) {
+        let range = document.createRange();
+        range.setStart(content.childNodes[0],i);
+        range.setEnd(content.childNodes[0],i);
+        ranges.push(range);
+    }
+
+    function getNearest(x, y) {
+  
+        let min = Infinity;   // 不知道有多大，给个无限大
+        let nearest = null;
+        for(let range of ranges) {
+            let rect = range.getBoundingClientRect();
+            let distance = (rect.x - x) ** 2 + (rect.y - y) ** 2;   // ** 乘方、不需要关心正负、只是比较大小，也不用开根号
+            if(distance < min) {
+                min = distance;
+                nearest = range;
+            }
+            
+        }
+        return nearest;
+    }
+    // 清除文本选中
+    document.addEventListener('selectstart', e => e.preventDefault());
+
+</script>
+
+</html>
