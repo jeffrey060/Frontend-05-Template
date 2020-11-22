@@ -1,0 +1,189 @@
+<div id="container"></div>
+
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.7.1/dist/g6.min.js"></script>
+
+<script>
+  const data = {
+    id: "Object",
+    children: [
+      {
+        id: "基本对象",
+        children: [{ id: "Function" }, { id: "Boolean" }, { id: "Symbol" }],
+      },
+      {
+        id: "错误对象",
+        children: [
+          {
+            id: "Error",
+            children: [
+              { id: "AggregateError" },
+              { id: "EvalError" },
+              { id: "InternalError" },
+              { id: "RangeError" },
+              { id: "ReferenceError" },
+              { id: "SyntaxError" },
+              { id: "TypeError" },
+              { id: "URIError" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "数字和日期对象",
+        children: [
+          { id: "Number" },
+          { id: "BigInt" },
+          { id: "Math" },
+          { id: "Date" },
+        ],
+      },
+      {
+        id: "字符串",
+        children: [{ id: "String" }, { id: "RegExp" }],
+      },
+      {
+        id: "数组",
+        children: [
+          { id: "Array" },
+          {
+            id: "TypedArray",
+            children: [
+              { id: "Int8Array" },
+              { id: "Uint8Array" },
+              { id: "Uint8ClampedArray" },
+              { id: "Int16Array" },
+              { id: "Uint16Array" },
+              { id: "Int32Array" },
+              { id: "Uint32Array" },
+              { id: "Float32Array" },
+              { id: "Float64Array" },
+              { id: "BigInt64Array" },
+              { id: "BigUint64Array" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "键的集合对象",
+        children: [
+          { id: "Map" },
+          { id: "Set" },
+          { id: "WeakMap" },
+          { id: "WeakSet" },
+        ],
+      },
+      {
+        id: "结构化数据",
+        children: [
+          { id: "ArrayBuffer" },
+          { id: "SharedArrayBuffer" },
+          { id: "Atomics" },
+          { id: "DataView" },
+          { id: "JSON" },
+        ],
+      },
+      {
+        id: "控制抽象对象",
+        children: [
+          { id: "Promise" },
+          { id: "Generator" },
+          { id: "GeneratorFunction" },
+          { id: "AsyncFunction" },
+        ],
+      },
+      {
+        id: "反射",
+        children: [{ id: "Reflect" }, { id: "Proxy" }],
+      },
+      {
+        id: "国际化多语言",
+        children: [
+          { id: "Intl" },
+          { id: "Intl.Collator" },
+          { id: "Intl.DateTimeFormat" },
+          { id: "Intl.ListFormat" },
+          { id: "Intl.NumberFormat" },
+          { id: "Intl.PluralRules" },
+          { id: "Intl.RelativeTimeFormat" },
+          { id: "Intl.Locale" },
+        ],
+      },
+      {
+        id: "WebAssembly类",
+        children: [
+          { id: "WebAssembly" },
+          { id: "WebAssembly.Module" },
+          { id: "WebAssembly.Instance" },
+          { id: "WebAssembly.Memory" },
+          { id: "WebAssembly.Table" },
+          { id: "WebAssembly.CompileError" },
+          { id: "WebAssembly.LinkError" },
+          { id: "WebAssembly.RuntimeError" },
+        ],
+      },
+    ],
+  };
+
+  const container = document.getElementById("container");
+  //   const width = container.scrollWidth;
+  //   const height = container.scrollHeight || 500;
+  const width = screen.width;
+  const height = screen.height;
+  const graph = new G6.TreeGraph({
+    container: "container",
+    width,
+    height,
+    modes: {
+      default: [
+        {
+          type: "collapse-expand",
+          onChange: function onChange(item, collapsed) {
+            const data = item.get("model").data;
+            data.collapsed = collapsed;
+            return true;
+          },
+        },
+        "drag-canvas",
+        "zoom-canvas",
+      ],
+    },
+    defaultNode: {
+      size: 26,
+      anchorPoints: [
+        [0, 0.5],
+        [1, 0.5],
+      ],
+    },
+    defaultEdge: {
+      type: "cubic-horizontal",
+    },
+    layout: {
+      type: "dendrogram",
+      direction: "LR", // H / V / LR / RL / TB / BT
+      nodeSep: 30,
+      rankSep: 100,
+    },
+  });
+
+  graph.node(function (node) {
+    return {
+      label: node.id,
+      labelCfg: {
+        position: node.children && node.children.length > 0 ? "left" : "right",
+        offset: 5,
+      },
+    };
+  });
+
+  graph.data(data);
+  graph.render();
+  graph.fitView();
+
+  if (typeof window !== "undefined")
+    window.onresize = () => {
+      if (!graph || graph.get("destroyed")) return;
+      if (!container || !container.scrollWidth || !container.scrollHeight)
+        return;
+      graph.changeSize(container.scrollWidth, container.scrollHeight);
+    };
+</script>
