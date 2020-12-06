@@ -1,6 +1,8 @@
 学习笔记
 
 实现一个toy browser的简略步骤：
+--------------------------------------------------
+
 开始：URL->HTTP
 HTML->parse
 DOM->CSS computing
