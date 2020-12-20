@@ -17,29 +17,34 @@ css选择器：[https://www.w3.org/TR/selector-3]
 
 selector-group: ,
 
-selector
+selector:
 
-后代选择器(以空格 分隔)
-子元素选择器(以大于 > 号分隔）
-相邻兄弟选择器（以加号 + 分隔）
-普通兄弟选择器（以波浪号 ～ 分隔）
+1后代选择器(以空格 分隔)
+
+2子元素选择器(以大于 > 号分隔）
+
+3相邻兄弟选择器（以加号 + 分隔）
+
+4普通兄弟选择器（以波浪号 ～ 分隔）
+
 simple-selector:
 
-标签选择器 type
+1标签选择器 type
 
-Class 选择器 .
+2Class 选择器 .
 
-Id 选择器 #
+3Id 选择器 #
 
-属性选择器 []
+4属性选择器 []
 
-伪类选择器 :
+5伪类选择器 :
 
-伪元素选择器
-
+6伪元素选择器
 element:after  { style properties }  /* CSS2 语法 */
+
 element::after { style properties } /_ CSS3 语法 _/
-反选伪类 :not()
+
+7反选伪类 :not()
 
 
 css优先级
