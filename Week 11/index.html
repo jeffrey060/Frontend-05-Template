@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #test #input.input[type=text] {
+            color: red;
+        }
+    </style>
+</head>
+<div class="container2 container">
+    <div id="id" class="class">
+        hello
+    </div>
+    <div id="test">
+        <input type="text" class="input testinput" id="input">
+    </div>
+</div>
+
+<body>
+    <script>
+        function _match(element, selector) {
+            if (!selector || !element.attributes) {
+                return false;
+            }
+            if (selector.charAt(0) == "#") {
+                var attr = element.attributes.id;
+                if (attr && attr.value === selector.replace("#", "")) {
+                    return true;
+                }
+            } else if (selector.charAt(0) == ".") {
+                var attr = element.attributes.class;
+                var _s = selector.replace(".", "")
+                var _v = attr && attr.value || ''
+                _v = _v.split(' ');
+                for (let i = 0; i < _v.length; i++) {
+                    const e = _v[i];
+                    if (e === _s) {
+                        return true;
+                    }
+                }
+
+            } else {
+                //要转大写
+                if (element.tagName === (selector && selector.toUpperCase())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        function match(selector, element) {
+            if (!selector || !element) {
+                return false;
+            }
+            let arr = selector.split(' ').reverse();
+            console.log(arr);
+            let parents = [element];
+            let _parent = element;
+            while (_parent.parentNode) {
+                parents.push(_parent.parentNode);
+                _parent = _parent.parentNode;
+            }
+            let isMatch = true;
+            outer: for (let i = 0; i < arr.length; i++) {
+                const a = arr[i];
+                console.log(a);
+                // if (i == 0) {
+                //     parents.push(element)
+                // } else {
+                //     parents.push(element.parentNode)
+                // }
+                // if (i == 0) {
+                let _a = a.replace(/#/g, ' #').replace(/\./g, ' .').replace(/\[/g, ' [');
+                console.log(_a);
+                // #input .input [type=text]
+                let __arr = _a.split(' ');
+                console.log(__arr);
+                for (let j = 0; j < __arr.length; j++) {
+                    const __s = __arr[j];
+                    if (!__s) {
+                        continue;
+                    }
+                    if (i === 0) {
+                        let _isMatch = _match(parents[i], __s);
+                        if (!_isMatch) {
+                            isMatch = false;
+                            break outer;
+                        }
+                    } else {
+                        let _isMatch = false;
+                        inner: for (let z = 0; z < parents.length; z++) {
+                            const p = parents[z];
+                            _isMatch = _match(p, __s);
+                            if (_isMatch) {
+                                // parents.splice(0, z + 1);
+                                break inner;
+                            }
+                        }
+                        if (!_isMatch) {
+                            isMatch = false;
+                        } else {
+                            // parents.splice(0, z + 1);
+                        }
+                    }
+
+                    // const __s = __arr[j];
+                    // if (__s && __s.match(/^#/)) {
+                    //     let id = __s.replace('#', '')
+                    //     if (element.id !== id) {
+                    //         isMatch = false;
+                    //         break outer;
+                    //     }
+                    // }
+                    // if (__s && __s.match(/^\./)) {
+                    //     let cls = __s.replace('.', '')
+                    //     if (element.id !== id) {
+                    //         isMatch = false;
+                    //         break outer;
+                    //     }
+                    // }
+                }
+                if (isMatch) {
+                    parents.splice(0, 1);
+                }
+
+                // }
+
+            }
+            return isMatch;
+        }
+        // match("#test #input.input[type=text]", document.getElementById("input"));
+        let ismatch = match("div.container.container2 #test #input.input", document.getElementById("input"));
+        console.log(ismatch);
+    </script>
+</body>
+
+</html>
+

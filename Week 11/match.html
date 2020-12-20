@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>match</title>
+    <style>
+      div#root.root {
+        width: 200px;
+        height: 200px;
+        background-color: blueviolet;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" class="root abc">match</div>
+
+    <script>
+      function match(selector, element) {
+        // 从内往外匹配
+        const selectorList = selector.split(' ').reverse(); // ["#root.root", "div"]
+        for (const s of selectorList) {
+            const list = s.match(/(#|.)?\w+/g);
+            for (const c of list) {
+                if (c.charAt(0) === '#') {
+                    if (!(element.id && element.id === c.replace('#', ''))) return false;
+                } else if (c.charAt(0) === '.') {
+                    if (!(element.classList.length > 0 && Array.from(element.classList).includes(c.replace('.', '')))) return false;
+                } else {
+                    if (element.tagName !== c) return false;
+                }
+            }
+        }
+
+        return true;
+      }
+
+    //   match("div #root.root", document.querySelector("#root"));
+    </script>
+  </body>
+</html>
