@@ -57,7 +57,7 @@
 - Text
   - C++底层库 freeType 参照原点（origin）对一个字母进行抽象定义
 
-![freeType中对文字的定义](img/3.jpg)
+![freeType中对文字的定义](hh/3.jpg)
 - 行模型
   - line-top
     - 如果行高大于文字的高度就表示行的最高的线

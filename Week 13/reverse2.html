@@ -1,0 +1,26 @@
+<div id="a">
+      <span>1</span>
+      <p>2</p>
+      <a href="">3</a>
+      <div>4</div>
+    </div>
+    
+    <script>
+      let element = document.getElementById('a');
+    
+      function reverseChild(element) {
+        let range=new Range();
+        range.selectNodeContents(element);
+        let fragment=range.extractContents();
+        let l=fragment.childNodes.length;
+        // 最后一个元素倒叙后肯定是第一个
+        // var l =element.childNodes.length-1;
+        while(l-- >0){
+          fragment.appendChild(fragment.childNodes[l]);
+        }
+        element.appendChild(fragment);
+      }
+    
+      reverseChild(element);
+    </script>
+    
