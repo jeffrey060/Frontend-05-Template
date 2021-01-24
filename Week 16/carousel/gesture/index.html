@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+	</head>
+	<body oncontextmenu="event.preventDefault()"></body>
+	<script type="module">
+		import { enableGesture } from "./gesture.js";
+		enableGesture(document.documentElement);
+		document.documentElement.addEventListener("tap", () => {
+			console.log("tap event triggered");
+		});
+	</script>
+</html>
