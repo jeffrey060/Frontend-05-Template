@@ -38,8 +38,7 @@ module.exports = class extends Generator {
 ```shell
 npx yo toolchain
 ```
-看到以下结果，说明运行成功啦！
-![p1][p1]
+看到以下结果，说明运行成功
 
 6. 使用异步function与用户进行交互,修改generators/app/index.js文件, 在method2后新增一个方法，内容如下:
 ```js
