@@ -1,15 +1,15 @@
-# 搭建一个toolchain
-1. npm初始化项目
+# toolchain的搭建
+1. npm初始化项目的命令
 ```shell
 npm init 
 //name项需要以 generator-开头，比如generator-toolchain
 ```
-2. 安装yeoman
+2. 安装yeoman的命令
 ```shell
 yarn add yeoman-generator
 ```
 
-3. 建立项目文件夹和文件
+3. 建立项目文件夹和文件的命令
 ```shell
 mkdir -p generators/app
 touch generators/app/index.js
@@ -34,11 +34,10 @@ module.exports = class extends Generator {
 };
 ```
 
-5. 根目录运行命令测试
+5. 根目录运行命令测试的命令
 ```shell
 npx yo toolchain
 ```
-看到以下结果，说明运行成功
 
 6. 使用异步function与用户进行交互,修改generators/app/index.js文件, 在method2后新增一个方法，内容如下:
 ```js
@@ -70,8 +69,7 @@ https://yeoman.io/authoring/file-system.html
 https://yeoman.io/authoring/dependencies.html
 
 # webpack了解
-		webpack最初是为了nodejs设计的，并非为了web开发而设计。但现在webpack做web打包非常多， 他的核心思路是最终打包成一个js文件，然后通过手动引入到html文件中, 它可以做多文件的合并，并通过各种loader和plugin去制定各种规则。
-		使用webpack需要安装两个包， webpack和webpack-cli,webpack是核心， webpack-cli提供命令。
+		webpack最初设计是为了nodejs服务，他的核心思路是最终打包成一个可用js文件，然后通过手动引入到html文件中。
 		webpack配置文件采用commonjs规范：导出一个对象，包含几个基础模块：entry, output, module, plugin
             
 ```
@@ -92,10 +90,10 @@ module.exports = {
 }
 ```
 - **webapck 可以做什么？**
-  - 多文件合并。通过 loader 和 plugin ，来控制合并规则和文本转换。
-- **基础安装包**
+  - 多文件合并。通过 loader 和 plugin ，来订制合并规则和文本转换。
+- **使用webpack需要安装两个基础安装包**
   - `webpack-cli`: 提供 webpack 命令（不包括在 webpack 依赖中）
-  - `webpack`
+  - `webpack`：是核心
 - **一个全新的 webpack 项目**
 
   - **安装 webpack**
