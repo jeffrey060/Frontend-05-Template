@@ -69,7 +69,7 @@ https://yeoman.io/authoring/file-system.html
 https://yeoman.io/authoring/dependencies.html
 
 # webpack了解
-		webpack最初设计是为了nodejs服务，他的核心思路是最终打包成一个可用js文件，然后通过手动引入到html文件中。
+		build是同时为开发和发布服务的基础设施。webpack最初设计是为了nodejs服务，他的核心思路是最终打包成一个可用js文件，然后通过手动引入到html文件中，过程全是js，没有html，现在有后起之秀打包工具基于html，配置要求没那么高。
 		webpack配置文件采用commonjs规范：导出一个对象，包含几个基础模块：entry, output, module, plugin
             
 ```
