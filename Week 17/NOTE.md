@@ -67,9 +67,50 @@ https://yeoman.io/authoring/file-system.html
 
 8. yeoman的依赖管理：（第三方模块的安装）
 https://yeoman.io/authoring/dependencies.html
+## 其他
 
+- **`npm link`**
+
+  - 本地开发 npm 模块时，可以使用 `npm link` 命令，将 npm 模块链接到对应的运行项目中去，方便对模块进行调试和测试。
+
+  - ```
+    npm link (in package dir)
+    npm link [<@scope>/]<pkg>[@<version>]
+    alias: npm ln
+    ```
+  - [使用](https://www.jianshu.com/p/aaa7db89a5b2)
+
+    - `npm-link-module`: 要开发的 npm 模块,
+    - `npm-link-example`: 要运行 npm 模块的项目
+    - ```
+      cd npm-link-module
+      npm link
+
+      cd npm-link-example
+      npm link npm-link-module
+      ```
+
+    - 在 npm-link-example 引用然后运行
+      ```js
+      require("npm-link-module");
+      ```
+
+- **npx**
+
+  - 主要特点
+
+    1. 临时安装可执行依赖包，不用全局安装，不用担心长期的污染。
+    2. 可以执行依赖包中的命令，安装完成自动运行。
+    3. 自动加载 node_modules 中依赖包，不用指定$PATH。
+    4. 可以指定 node 版本、命令的版本，解决了不同项目使用不同版本的命令的问题。
+
+    ```
+    npx用来解决全局命令行工具只能有一个的问题。
+
+    比如装个webpack,使用的是4.x，可是已经装了全局的1.x版本并且还要继续使用，这个时候可以不装在全局，用npx webpack代替webpack命令，互不干扰。
+    ```
 # webpack了解
-		build是同时为开发和发布服务的基础设施。webpack最初设计是为了nodejs服务，他的核心思路是最终打包成一个可用js文件，然后通过手动引入到html文件中，过程全是js，没有html，现在有后起之秀打包工具基于html，配置要求没那么高。
+		build是同时为开发和发布服务的基础设施。webpack最初设计是为了nodejs服务，他的核心思路是最终打包成一个可用js文件，然后通过手动引入到html文件中，过程全是js，没有html，现在有后起之秀打包工具基于html，配置要求没那么高 。
 		webpack配置文件采用commonjs规范：导出一个对象，包含几个基础模块：entry, output, module, plugin
             
 ```
@@ -163,45 +204,3 @@ module.exports = {
 	"presets":["@babel/preset-env"]
 }
 ```
-## 其他
-
-- **`npm link`**
-
-  - 本地开发 npm 模块时，可以使用 `npm link` 命令，将 npm 模块链接到对应的运行项目中去，方便对模块进行调试和测试。
-
-  - ```
-    npm link (in package dir)
-    npm link [<@scope>/]<pkg>[@<version>]
-    alias: npm ln
-    ```
-  - [使用](https://www.jianshu.com/p/aaa7db89a5b2)
-
-    - `npm-link-module`: 要开发的 npm 模块,
-    - `npm-link-example`: 要运行 npm 模块的项目
-    - ```
-      cd npm-link-module
-      npm link
-
-      cd npm-link-example
-      npm link npm-link-module
-      ```
-
-    - 在 npm-link-example 引用然后运行
-      ```js
-      require("npm-link-module");
-      ```
-
-- **npx**
-
-  - 主要特点
-
-    1. 临时安装可执行依赖包，不用全局安装，不用担心长期的污染。
-    2. 可以执行依赖包中的命令，安装完成自动运行。
-    3. 自动加载 node_modules 中依赖包，不用指定$PATH。
-    4. 可以指定 node 版本、命令的版本，解决了不同项目使用不同版本的命令的问题。
-
-    ```
-    npx用来解决全局命令行工具只能有一个的问题。
-
-    比如装个webpack,使用的是4.x，可是已经装了全局的1.x版本并且还要继续使用，这个时候可以不装在全局，用npx webpack代替webpack命令，互不干扰。
-    ```
