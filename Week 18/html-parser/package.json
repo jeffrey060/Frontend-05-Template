@@ -1,0 +1,25 @@
+{
+      "name": "html-parser",
+      "version": "1.0.0",
+      "description": "",
+      "main": "paser.js",
+      "directories": {
+        "test": "test"
+      },
+      "scripts": {
+        "test": "mocha --require @babel/register",
+        "coverage": "nyc mocha --require @babel/register"
+      },
+      "author": "",
+      "license": "ISC",
+      "devDependencies": {
+        "css": "^3.0.0",
+        "@babel/core": "^7.12.13",
+        "@babel/preset-env": "^7.12.13",
+        "@babel/register": "^7.12.13",
+        "mocha": "^8.2.1",
+        "nyc": "^15.1.0",
+        "@istanbuljs/nyc-config-babel": "^3.0.0",
+        "babel-plugin-istanbul": "^6.0.0"
+      }
+    }
