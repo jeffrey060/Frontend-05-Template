@@ -1,4 +1,4 @@
-import {parseHtml} from '../paser.js';
+import {parseHtml} from '../src/paser.js';
 
 var assert = require('assert');
 
@@ -38,8 +38,8 @@ describe('parse html:', function() {
     assert.strictEqual(tree.children.length, 1);
     assert.strictEqual(tree.children[0].children.length, 0);
   })
-  it(`<a id='abc' />`, function(){
-    let tree = parseHtml("<a id='abc' />")
+  it(`<a id=\'abc\ ' />`, function(){
+    let tree = parseHtml("<a id=\'abc\ ' />")
     assert.strictEqual(tree.children.length, 1);
     assert.strictEqual(tree.children[0].children.length, 0);
   })
