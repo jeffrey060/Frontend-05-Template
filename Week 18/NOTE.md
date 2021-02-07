@@ -1,12 +1,12 @@
 学习笔记
 ## 单元测试
 ### mocha
-mocha是设计本身是基于nodejs，导入导出采用commonJS规范，解决mocha无法支持export语法
+mocha是设计本身是基于nodejs，导入导出采用commonJS规范，解决mocha无法支持export语法需要引入babel
 1. 安装babel/core、babel/register、babel/preset-env
 2. 配置.babelrc
 3. 通过mocha --require @babel/register 来启动测试
 
-## 测试覆盖率code coverage
+## 测试覆盖率
 ### istanbul又叫nyc
 通过nyc可以进行测试覆盖率的统计；nyc可以兼容babel
 1. 安装依赖babel-plugin-istanbul、@istanbuljs/nyc-config-babel
