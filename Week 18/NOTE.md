@@ -7,8 +7,8 @@ mocha是设计本身是基于nodejs，导入导出采用commonJS规范，解决m
 3. 通过mocha --require @babel/register 来启动测试
 
 ## 测试覆盖率code coverage
-### nyc
-通过nyc可以进行测试覆盖率的统计nyc；可以兼容babel
+### istanbul又叫nyc
+通过nyc可以进行测试覆盖率的统计；nyc可以兼容babel
 1. 安装依赖babel-plugin-istanbul、@istanbuljs/nyc-config-babel
 2. 配置babel plugin
 3. 配置nyc的extends
