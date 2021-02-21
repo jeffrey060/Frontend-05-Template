@@ -1,7 +1,7 @@
 ## overview
 
 
-流程：代码 ==发布工具 -> 发布系统 -> 线上服务系统 -> 展示给用户
+### 流程：代码 ==发布工具 -> 发布系统 -> 线上服务系统 -> 展示给用户
 ### 1. 发布系统：接收发布工具发送上来的代码文件，放到指定目录 参考代码Week 19/task/publish-server
 ### 2. 发布工具： 程序开发人员需要发布的时候，在客户端使用它将本地代码发布到线上的发布服务器 参考代码Week 19\task\server
 ### 3. 线上服务系统：给用户提供线上服务访问的服务器 参考代码Week 19/task/publish-server
@@ -10,12 +10,12 @@
 ### 使用虚拟机模拟服务器
 
 工具：
-1. Oracle VM VirtualBox 下载地址： https://www.virtualbox.org/
-2. Ubuntu 20.04.1 LTS (Focal Fossa) 下载地址：https://releases.ubuntu.com/20.04/
+>(镜像地址使用：http://mirrors.aliyun.com/ubuntu  
+> 默认安装 openSSH)
+1. Oracle VM VirtualBox download： https://www.virtualbox.org/
+2. Ubuntu 20.04.1 LTS (Focal Fossa) download：https://releases.ubuntu.com/20.04/
 
-ps:
-> 镜像地址使用：http://mirrors.aliyun.com/ubuntu  
-> 默认安装 openSSH 
+
 
 ### 服务器环境配置
 安装 node：```sudo apt install nodejs```   
@@ -24,13 +24,15 @@ ps:
 ## 线上服务系统
 ### 构建项目
 使用 express-generator 快速生成一个简单前端项目(/server)
-
+命令：
+```bash
 mkdir server
 cd server
 npx express-generator
 npm install
 npm start
 scp -P 8022 -r ./* winter@127.0.0.1:home/winter/server
+```
 
 ### 线上服务系统部署
 1. 在服务器启动 ssh，默认在 22 端口监听
