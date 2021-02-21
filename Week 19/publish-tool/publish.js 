@@ -1,0 +1,29 @@
+let http = require("http");
+let archiver = require("archiver");
+
+// 发布工具
+let request = http.request({
+    hostname: "127.0.0.1",  // 发布系统 ip 地址
+    port: 8082,  // 发布系统监听端口
+    method: "POST",
+    headers: {
+        'Content-type': 'application/octet-stream'
+        // 'Content-length': stat.size
+    }
+}, response => {
+    console.log(response)
+});
+
+// 创建压缩文件对象
+const archive = archiver('zip', {
+    zlib: { level: 9 }
+});
+
+// 压缩文件夹
+archive.directory('./simple/', false);
+
+// 表示压缩完成
+archive.finalize();
+
+// 传输压缩文件
+archive.pipe(request);
